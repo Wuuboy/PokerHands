@@ -197,7 +197,7 @@ public class PokerHandsTest {
     Card card6 = new Card("3H");
     Card card7 = new Card("3D");
     Card card8 = new Card("3S");
-    Card card9 = new Card("3C");
+    Card card9 = new Card("4C");
     Card card10 = new Card("KD");
     List<Card>cardList2 = Arrays.asList(card6,card7,card8,card9,card10);
 
