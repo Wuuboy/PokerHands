@@ -153,7 +153,7 @@ public class PokerHandsTest {
     Card card5 = new Card("9D");
     List<Card>cardList1 = Arrays.asList(card1,card2,card3,card4,card5);
     Card card6 = new Card("2H");
-    Card card7 = new Card("3D");
+    Card card7 = new Card("2D");
     Card card8 = new Card("5S");
     Card card9 = new Card("9C");
     Card card10 = new Card("KD");
