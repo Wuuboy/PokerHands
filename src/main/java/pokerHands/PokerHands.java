@@ -55,18 +55,11 @@ public class PokerHands {
               && player2ExistPairMap.containsValue(4)) {
             return "player 2 win!";
           } else if (player1ExistPairMap.containsValue(4) && player2ExistPairMap.containsValue(4)) {
-            return player1ExistPairMap.entrySet().stream()
-                        .filter(e -> e.getValue() == 4)
-                        .findFirst()
-                        .get()
-                        .getValue()
-                    > player2ExistPairMap.entrySet().stream()
-                        .filter(e -> e.getValue() == 4)
-                        .findFirst()
-                        .get()
-                        .getValue()
-                ? "player 1 win!"
-                : "player 2 win!";
+            return player1ExistPairMap.entrySet().stream().filter(e -> e.getValue() == 4)
+                        .findFirst().get().getValue()
+                    > player2ExistPairMap.entrySet().stream().filter(e -> e.getValue() == 4)
+                        .findFirst().get().getValue()
+                ? "player 1 win!" : "player 2 win!";
           } else {
             if (player1ExistPairMap.containsValue(3) && !player2ExistPairMap.containsValue(3)) {
               return "player 1 win!";
@@ -75,18 +68,11 @@ public class PokerHands {
               return "player 2 win!";
             } else if (player1ExistPairMap.containsValue(3)
                 && player2ExistPairMap.containsValue(3)) {
-              return player1ExistPairMap.entrySet().stream()
-                          .filter(e -> e.getValue() == 3)
-                          .findFirst()
-                          .get()
-                          .getValue()
-                      > player2ExistPairMap.entrySet().stream()
-                          .filter(e -> e.getValue() == 3)
-                          .findFirst()
-                          .get()
-                          .getValue()
-                  ? "player 1 win!"
-                  : "player 2 win!";
+              return player1ExistPairMap.entrySet().stream().filter(e -> e.getValue() == 3)
+                          .findFirst().get().getValue()
+                  > player2ExistPairMap.entrySet().stream().filter(e -> e.getValue() == 3)
+                          .findFirst().get().getValue()
+                  ? "player 1 win!" : "player 2 win!";
             } else {
               Entry<Integer, Integer> player1ExistPairFirstItem =
                   player1ExistPairMap.entrySet().iterator().next();
@@ -98,8 +84,7 @@ public class PokerHands {
                 return "player 1 win!";
               } else if (player1ExistPairMapSize == player2ExistPairMapSize) {
                 return (player1ExistPairValue > player2ExistPairValue)
-                    ? "player 1 win!"
-                    : "player 2 win!";
+                    ? "player 1 win!" : "player 2 win!";
               } else {
                 return "player 2 win!";
               }
@@ -111,7 +96,7 @@ public class PokerHands {
   }
 
   private boolean isConstantWithSameColor(List<Card> cardList) {
-    Set player1Set = new HashSet();
+    Set<String> player1Set = new HashSet<>();
     for (Card card : cardList) {
       player1Set.add(card.getCardName().substring(1, 2));
     }
@@ -148,27 +133,21 @@ public class PokerHands {
   private Map<Integer, Integer> existPair(List<Integer> playerCardNumList) {
     Map<Integer, Integer> result = new HashMap<>();
     Map<Integer, Integer> map = new HashMap<>();
-    playerCardNumList.stream()
-        .forEach(
-            cardNum -> {
-              Integer num = map.get(cardNum);
-              map.put(cardNum, num == null ? 1 : num + 1);
-            });
+    for (Integer cardNum : playerCardNumList) {
+      Integer num = map.get(cardNum);
+      map.put(cardNum, num == null ? 1 : num + 1);
+    }
     map.entrySet().stream().filter(e -> e.getValue() == 2).forEach(e -> result.put(e.getKey(), 2));
-    map.entrySet().stream()
-        .filter(e -> e.getValue() == 3)
-        .forEach(e -> result.put(e.getKey(), 3));
-    map.entrySet().stream()
-        .filter(e -> e.getValue() == 4)
-        .forEach(e -> result.put(e.getKey(), 4));
+    map.entrySet().stream().filter(e -> e.getValue() == 3).forEach(e -> result.put(e.getKey(), 3));
+    map.entrySet().stream().filter(e -> e.getValue() == 4).forEach(e -> result.put(e.getKey(), 4));
     return result;
   }
 
   private List<Integer> addressInput(List<Card> cardList) {
     List<Integer> adressedArrayInput = new ArrayList<>();
-    cardList.stream()
-        .forEach(
-            card -> adressedArrayInput.add(transferWordToNum(card.getCardName().substring(0, 1))));
+    for (Card card : cardList) {
+      adressedArrayInput.add(transferWordToNum(card.getCardName().substring(0, 1)));
+    }
     Collections.sort(adressedArrayInput);
     return adressedArrayInput;
   }
