@@ -143,4 +143,25 @@ public class PokerHandsTest {
 
     assertEquals("player 2 win!",result);
   }
+  @Test
+  public void should_return_player1_win_when_input_2H_2D_5S_9C_9D_and_2H_2D_5S_9C_KD() {
+
+    Card card1 = new Card("2H");
+    Card card2 = new Card("2D");
+    Card card3 = new Card("5S");
+    Card card4 = new Card("9C");
+    Card card5 = new Card("9D");
+    List<Card>cardList1 = Arrays.asList(card1,card2,card3,card4,card5);
+    Card card6 = new Card("2H");
+    Card card7 = new Card("3D");
+    Card card8 = new Card("5S");
+    Card card9 = new Card("9C");
+    Card card10 = new Card("KD");
+    List<Card>cardList2 = Arrays.asList(card6,card7,card8,card9,card10);
+
+    PokerHands pokerHands = new PokerHands();
+    String result = pokerHands.judge(cardList1,cardList2);
+
+    assertEquals("player 2 win!",result);
+  }
 }
