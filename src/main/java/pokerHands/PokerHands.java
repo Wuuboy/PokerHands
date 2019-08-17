@@ -3,9 +3,11 @@ package pokerHands;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 
 public class PokerHands {
 
@@ -26,10 +28,12 @@ public class PokerHands {
     int player1ExistPairMapSize = player1ExistPairMap.size();
     int player2ExistPairMapSize = player2ExistPairMap.size();
 
-    if (isConstant(player1CardNumList)&&!isConstant(player2CardNumList)){
+    if (isConstant(player1CardNumList) && !isConstant(player2CardNumList)) {
       return "player 1 win!";
-    }else if (!isConstant(player1CardNumList)&&isConstant(player2CardNumList)){
+    } else if (!isConstant(player1CardNumList) && isConstant(player2CardNumList)) {
       return "player 2 win!";
+    } else if (isConstant(player1CardNumList) && isConstant(player2CardNumList)) {
+      return isConstantWithSameColor(cardList1) ? "player 1 win!" : "player 2 win!";
     } else {
       if (player1ExistPairMapSize == 0 && player2ExistPairMapSize == 0) {
         if (resultNum > 0) {
@@ -106,32 +110,40 @@ public class PokerHands {
     }
   }
 
-
-  public boolean isConstant(List<Integer> playerCardNumList){
-    int playerCardNumListSize = playerCardNumList.size();
-    if (playerCardNumList.get(playerCardNumListSize-1)-playerCardNumList.get(0)!=4) {
-      return false;
+  private boolean isConstantWithSameColor(List<Card> cardList) {
+    Set player1Set = new HashSet();
+    for (Card card : cardList) {
+      player1Set.add(card.getCardName().substring(1, 2));
     }
-    boolean b = false;
-    for(int i =1;i<playerCardNumListSize-1;i++){
-      if (playerCardNumList.get(i)*2 != playerCardNumList.get(i-1)+playerCardNumList.get(i+1)) {
-        b = false;
-        break;
-      }
-      if (Math.abs(playerCardNumList.get(i+1)-playerCardNumList.get(i))!=1) {
-        b = false;
-        break;
-      }
-      if ((playerCardNumList.get(i+1)-playerCardNumList.get(i)) != (playerCardNumList.get(i)-playerCardNumList.get(i-1))) {
-        b = false;
-        break;
-      }
-      b =true ;
-      continue;
-    }
-    return b;
+    return player1Set.size() == 1;
   }
 
+  private boolean isConstant(List<Integer> playerCardNumList) {
+    int playerCardNumListSize = playerCardNumList.size();
+    if (playerCardNumList.get(playerCardNumListSize - 1) - playerCardNumList.get(0) != 4) {
+      return false;
+    }
+    boolean isConstant = false;
+    for (int i = 1; i < playerCardNumListSize - 1; i++) {
+      if (playerCardNumList.get(i) * 2
+          != playerCardNumList.get(i - 1) + playerCardNumList.get(i + 1)) {
+        isConstant = false;
+        break;
+      }
+      if (Math.abs(playerCardNumList.get(i + 1) - playerCardNumList.get(i)) != 1) {
+        isConstant = false;
+        break;
+      }
+      if ((playerCardNumList.get(i + 1) - playerCardNumList.get(i))
+          != (playerCardNumList.get(i) - playerCardNumList.get(i - 1))) {
+        isConstant = false;
+        break;
+      }
+      isConstant = true;
+      continue;
+    }
+    return isConstant;
+  }
 
   private Map<Integer, Integer> existPair(List<Integer> playerCardNumList) {
     Map<Integer, Integer> result = new HashMap<>();
@@ -144,10 +156,10 @@ public class PokerHands {
             });
     map.entrySet().stream().filter(e -> e.getValue() == 2).forEach(e -> result.put(e.getKey(), 2));
     map.entrySet().stream()
-        .filter(e -> Integer.valueOf(e.getValue()) == 3)
+        .filter(e -> e.getValue() == 3)
         .forEach(e -> result.put(e.getKey(), 3));
     map.entrySet().stream()
-        .filter(e -> Integer.valueOf(e.getValue()) == 4)
+        .filter(e -> e.getValue() == 4)
         .forEach(e -> result.put(e.getKey(), 4));
     return result;
   }
