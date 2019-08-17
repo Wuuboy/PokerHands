@@ -162,7 +162,7 @@ public class PokerHandsTest {
     PokerHands pokerHands = new PokerHands();
     String result = pokerHands.judge(cardList1,cardList2);
 
-    assertEquals("player 2 win!",result);
+    assertEquals("player 1 win!",result);
   }
   @Test
   public void should_return_player1_win_when_input_2H_2D_5S_5C_KD_and_2H_2D_2S_9C_KD() {
