@@ -1,13 +1,11 @@
 package pokerHands;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import org.omg.CORBA.PRIVATE_MEMBER;
 
 public class PokerHands {
 
@@ -28,79 +26,112 @@ public class PokerHands {
     int player1ExistPairMapSize = player1ExistPairMap.size();
     int player2ExistPairMapSize = player2ExistPairMap.size();
 
-    if (player1ExistPairMapSize == 0 && player2ExistPairMapSize == 0) {
-      if (resultNum > 0) {
-        return "player 1 win!";
-      } else if (resultNum < 0) {
-        return "player 2 win!";
-      } else {
-        return "peace!";
-      }
+    if (isConstant(player1CardNumList)&&!isConstant(player2CardNumList)){
+      return "player 1 win!";
+    }else if (!isConstant(player1CardNumList)&&isConstant(player2CardNumList)){
+      return "player 2 win!";
     } else {
-      if (player2ExistPairMapSize == 0) {
-        return "player 1 win!";
-      } else if (player1ExistPairMapSize == 0) {
-        return "player 2 win!";
-      } else {
-        if (player1ExistPairMap.containsValue(4) && !player2ExistPairMap.containsValue(4)) {
+      if (player1ExistPairMapSize == 0 && player2ExistPairMapSize == 0) {
+        if (resultNum > 0) {
           return "player 1 win!";
-        } else if (!player1ExistPairMap.containsValue(4) && player2ExistPairMap.containsValue(4)) {
+        } else if (resultNum < 0) {
           return "player 2 win!";
-        } else if (player1ExistPairMap.containsValue(4) && player2ExistPairMap.containsValue(4)) {
-          return player1ExistPairMap.entrySet().stream()
-                      .filter(e -> e.getValue() == 4)
-                      .findFirst()
-                      .get()
-                      .getValue()
-                  > player2ExistPairMap.entrySet().stream()
-                      .filter(e -> e.getValue() == 4)
-                      .findFirst()
-                      .get()
-                      .getValue()
-              ? "player 1 win!"
-              : "player 2 win!";
         } else {
-          if (player1ExistPairMap.containsValue(3) && !player2ExistPairMap.containsValue(3)) {
+          return "peace!";
+        }
+      } else {
+        if (player2ExistPairMapSize == 0) {
+          return "player 1 win!";
+        } else if (player1ExistPairMapSize == 0) {
+          return "player 2 win!";
+        } else {
+          if (player1ExistPairMap.containsValue(4) && !player2ExistPairMap.containsValue(4)) {
             return "player 1 win!";
-          } else if (!player1ExistPairMap.containsValue(3)
-              && player2ExistPairMap.containsValue(3)) {
+          } else if (!player1ExistPairMap.containsValue(4)
+              && player2ExistPairMap.containsValue(4)) {
             return "player 2 win!";
-          } else if (player1ExistPairMap.containsValue(3) && player2ExistPairMap.containsValue(3)) {
+          } else if (player1ExistPairMap.containsValue(4) && player2ExistPairMap.containsValue(4)) {
             return player1ExistPairMap.entrySet().stream()
-                        .filter(e -> e.getValue() == 3)
+                        .filter(e -> e.getValue() == 4)
                         .findFirst()
                         .get()
                         .getValue()
                     > player2ExistPairMap.entrySet().stream()
-                        .filter(e -> e.getValue() == 3)
+                        .filter(e -> e.getValue() == 4)
                         .findFirst()
                         .get()
                         .getValue()
                 ? "player 1 win!"
                 : "player 2 win!";
           } else {
-            Entry<Integer, Integer> player1ExistPairFirstItem =
-                player1ExistPairMap.entrySet().iterator().next();
-            Entry<Integer, Integer> player2ExistPairFirstItem =
-                player2ExistPairMap.entrySet().iterator().next();
-            //          Integer player1ExistPair =player1ExistPairFirstItem.getValue();
-            //          Integer player2ExistPair = player2ExistPairFirstItem.getValue();
-            Integer player1ExistPairValue = player1ExistPairFirstItem.getKey();
-            Integer player2ExistPairValue = player2ExistPairFirstItem.getKey();
-            if (player1ExistPairMapSize > player2ExistPairMapSize) {
+            if (player1ExistPairMap.containsValue(3) && !player2ExistPairMap.containsValue(3)) {
               return "player 1 win!";
-            } else if (player1ExistPairMapSize == player2ExistPairMapSize) {
-              return (player1ExistPairValue > player2ExistPairValue)
+            } else if (!player1ExistPairMap.containsValue(3)
+                && player2ExistPairMap.containsValue(3)) {
+              return "player 2 win!";
+            } else if (player1ExistPairMap.containsValue(3)
+                && player2ExistPairMap.containsValue(3)) {
+              return player1ExistPairMap.entrySet().stream()
+                          .filter(e -> e.getValue() == 3)
+                          .findFirst()
+                          .get()
+                          .getValue()
+                      > player2ExistPairMap.entrySet().stream()
+                          .filter(e -> e.getValue() == 3)
+                          .findFirst()
+                          .get()
+                          .getValue()
                   ? "player 1 win!"
                   : "player 2 win!";
             } else {
-              return "player 2 win!";
+              Entry<Integer, Integer> player1ExistPairFirstItem =
+                  player1ExistPairMap.entrySet().iterator().next();
+              Entry<Integer, Integer> player2ExistPairFirstItem =
+                  player2ExistPairMap.entrySet().iterator().next();
+              Integer player1ExistPairValue = player1ExistPairFirstItem.getKey();
+              Integer player2ExistPairValue = player2ExistPairFirstItem.getKey();
+              if (player1ExistPairMapSize > player2ExistPairMapSize) {
+                return "player 1 win!";
+              } else if (player1ExistPairMapSize == player2ExistPairMapSize) {
+                return (player1ExistPairValue > player2ExistPairValue)
+                    ? "player 1 win!"
+                    : "player 2 win!";
+              } else {
+                return "player 2 win!";
+              }
             }
           }
         }
       }
     }
   }
+
+
+  public boolean isConstant(List<Integer> playerCardNumList){
+    int playerCardNumListSize = playerCardNumList.size();
+    if (playerCardNumList.get(playerCardNumListSize-1)-playerCardNumList.get(0)!=4) {
+      return false;
+    }
+    boolean b = false;
+    for(int i =1;i<playerCardNumListSize-1;i++){
+      if (playerCardNumList.get(i)*2 != playerCardNumList.get(i-1)+playerCardNumList.get(i+1)) {
+        b = false;
+        break;
+      }
+      if (Math.abs(playerCardNumList.get(i+1)-playerCardNumList.get(i))!=1) {
+        b = false;
+        break;
+      }
+      if ((playerCardNumList.get(i+1)-playerCardNumList.get(i)) != (playerCardNumList.get(i)-playerCardNumList.get(i-1))) {
+        b = false;
+        break;
+      }
+      b =true ;
+      continue;
+    }
+    return b;
+  }
+
 
   private Map<Integer, Integer> existPair(List<Integer> playerCardNumList) {
     Map<Integer, Integer> result = new HashMap<>();
