@@ -21,11 +21,21 @@ public class PokerHands {
       }
       break;
     }
-    if (existPair(player1CardNumList)){
+    boolean player1ExistPair = existPair(player1CardNumList).entrySet().iterator().next().getValue();
+    boolean player2ExistPair = existPair(player2CardNumList).entrySet().iterator().next().getValue();
+    Integer player1ExistPairValue = existPair(player1CardNumList).entrySet().iterator().next().getKey();
+    Integer player2ExistPairValue = existPair(player2CardNumList).entrySet().iterator().next().getKey();
+    if (player1ExistPair&&!player2ExistPair){
       return "player 1 win!";
-    }else if (existPair(player2CardNumList)){
+    }else if (!player1ExistPair&&player2ExistPair){
       return "player 2 win!";
-    }else {
+    }else if (player1ExistPair&&player2ExistPair){
+      if (player1ExistPairValue>player2ExistPairValue){
+        return "player 1 win!";
+      }else {
+        return "player 2 win!";
+      }
+    } else{
       if (resultNum > 0) {
         return "player 1 win!";
       } else if (resultNum < 0) {
@@ -36,16 +46,22 @@ public class PokerHands {
     }
   }
 
-  private boolean existPair(List<Integer> playerCardNumList) {
+  private Map<Integer,Boolean> existPair(List<Integer> playerCardNumList) {
+    Map<Integer,Boolean> result = new HashMap<>();
     Map<Integer, Integer> map = new HashMap<>();
     playerCardNumList.stream().forEach(cardNum->{
       Integer num = map.get(cardNum);
       map.put(cardNum, num == null ? 1 : num + 1);
     });
-    if (map.containsValue(2)){
-      return true;
-    }
-    return false;
+    map.entrySet()
+        .stream()
+        .filter(e->e.getValue()==2)
+        .forEach(e->result.put(e.getValue(),true));
+//    if (map.containsValue(2)){
+//      result.put()
+//      return true;
+//    }
+    return result;
   }
 
   private List<Integer> addressInput(List<Card> cardList) {
