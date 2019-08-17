@@ -23,11 +23,11 @@ public class PokerHands {
       }
       break;
     }
-    Map<Integer,Boolean>player1ExistPairMap = existPair(player1CardNumList);
-    Map<Integer,Boolean>player2ExistPairMap = existPair(player2CardNumList);
+    Map<Integer,Integer>player1ExistPairMap = existPair(player1CardNumList);
+    Map<Integer,Integer>player2ExistPairMap = existPair(player2CardNumList);
     int player1ExistPairMapSize = player1ExistPairMap.size();
     int player2ExistPairMapSize = player2ExistPairMap.size();
-    
+
     if (player1ExistPairMapSize==0&&player2ExistPairMapSize==0){
       if (resultNum > 0) {
         return "player 1 win!";
@@ -43,25 +43,32 @@ public class PokerHands {
       }else if (player1ExistPairMapSize==0){
         return "player 2 win!";
       }else {
-        Entry<Integer, Boolean> player1ExistPairFirstItem = player1ExistPairMap.entrySet().iterator().next();
-        Entry<Integer, Boolean> player2ExistPairFirstItem = player2ExistPairMap.entrySet().iterator().next();
-        boolean player1ExistPair =player1ExistPairFirstItem.getValue();
-        boolean player2ExistPair = player2ExistPairFirstItem.getValue();
-        Integer player1ExistPairValue = player1ExistPairFirstItem.getKey();
-        Integer player2ExistPairValue = player2ExistPairFirstItem.getKey();
-        if (player1ExistPairMapSize>player2ExistPairMapSize){
+        if (player1ExistPairMap.containsValue(3)&&!player2ExistPairMap.containsValue(3)){
           return "player 1 win!";
-        }else if (player1ExistPairMapSize==player2ExistPairMapSize){
-          return (player1ExistPairValue>player2ExistPairValue)?"player 1 win!":"player 2 win!";
-        }else {
+        }else if (!player1ExistPairMap.containsValue(3)&&player2ExistPairMap.containsValue(3)){
           return "player 2 win!";
+        }else {
+          Entry<Integer, Integer> player1ExistPairFirstItem = player1ExistPairMap.entrySet().iterator().next();
+          Entry<Integer, Integer> player2ExistPairFirstItem = player2ExistPairMap.entrySet().iterator().next();
+          Integer player1ExistPair =player1ExistPairFirstItem.getValue();
+          Integer player2ExistPair = player2ExistPairFirstItem.getValue();
+          Integer player1ExistPairValue = player1ExistPairFirstItem.getKey();
+          Integer player2ExistPairValue = player2ExistPairFirstItem.getKey();
+          if (player1ExistPairMapSize>player2ExistPairMapSize){
+            return "player 1 win!";
+          }else if (player1ExistPairMapSize==player2ExistPairMapSize){
+            return (player1ExistPairValue>player2ExistPairValue)?"player 1 win!":"player 2 win!";
+          }else {
+            return "player 2 win!";
+          }
         }
+
       }
     }
   }
 
-  private Map<Integer,Boolean> existPair(List<Integer> playerCardNumList) {
-    Map<Integer,Boolean> result = new HashMap<>();
+  private Map<Integer,Integer> existPair(List<Integer> playerCardNumList) {
+    Map<Integer,Integer> result = new HashMap<>();
     Map<Integer, Integer> map = new HashMap<>();
     playerCardNumList.stream().forEach(cardNum->{
       Integer num = map.get(cardNum);
@@ -70,7 +77,11 @@ public class PokerHands {
     map.entrySet()
         .stream()
         .filter(e->e.getValue()==2)
-        .forEach(e->result.put(e.getValue(),true));
+        .forEach(e->result.put(e.getValue(),2));
+    map.entrySet()
+        .stream()
+        .filter(e->e.getValue()==3)
+        .forEach(e->result.put(e.getValue(),3));
     return result;
   }
 
