@@ -49,4 +49,18 @@ public class PokerHandsTest {
 
     assertEquals("player 1 win!", result);
   }
+  @Test
+  public void should_return_player1_win_when_input_QH_and_JH() {
+
+    Card card1 = new Card("QH");
+    List<Card> cardList1 = Arrays.asList(card1);
+    Card card2 = new Card("KH");
+    List<Card> cardList2 = Arrays.asList(card2);
+
+    PokerHands pokerHands = new PokerHands();
+    String result = pokerHands.judge(cardList1, cardList2);
+
+    assertEquals("player 2 win!", result);
+  }
+
 }
