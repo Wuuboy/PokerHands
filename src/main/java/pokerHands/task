@@ -24,8 +24,8 @@ then return player 1 win
 then return player 2 win
 
 6.when input
+[2H,4D,5S,9C,KD]
 [2H,3D,5S,9C,KD]
-[3H,3D,5S,9C,JD]
 then return player 2 win
 
 7.when input
