@@ -8,8 +8,8 @@ import java.util.List;
 public class PokerHands {
 
   public String judge(List<Card> cardList1, List<Card> cardList2) {
-    String player1CardNum = transferWordToNum(cardList1.get(0).getCardName().substring(0,1));
-    String player2CardNum = transferWordToNum(cardList2.get(0).getCardName().substring(0,1));
+    Integer player1CardNum = addressInput(cardList1).get(0);
+    Integer player2CardNum = addressInput(cardList2).get(0);
     int resultNum = player1CardNum.compareTo(player2CardNum);
     if (resultNum > 0) {
       return "player 1 win!";
@@ -18,7 +18,16 @@ public class PokerHands {
     }
   }
 
-  private String transferWordToNum(String cardNum){
+  private List<Integer >addressInput(List<Card>cardList){
+    List<Integer>adressedArrayInput = new ArrayList<>();
+    cardList.stream().forEach(card -> adressedArrayInput
+        .add(transferWordToNum(card.getCardName().substring(0,1))));
+    Collections.sort(adressedArrayInput);
+    return adressedArrayInput;
+  }
+
+
+  private Integer transferWordToNum(String cardNum){
     switch (cardNum){
       case "J":
         cardNum = "11";
@@ -35,6 +44,6 @@ public class PokerHands {
       default:
         cardNum = cardNum;
     }
-    return cardNum;
+    return Integer.valueOf(cardNum);
   }
 }
