@@ -1,0 +1,74 @@
+when input
+[2H]
+[3H]
+then return player 2 win
+
+when input
+[2H]
+[JH]
+then return player 2 win
+
+when input
+[KH]
+[JH]
+then return player 1 win
+
+when input
+[KH]
+[AH]
+then return player 1 win
+
+when input
+[2H,3D,5S,9C,8D]
+[3H,3D,5S,9C,8D]
+then return player 2 win
+
+when input
+[2H,3D,5S,9C,KD]
+[3H,3D,5S,9C,KD]
+then return player 2 win
+
+when input
+[2H,3D,5S,9C,AD]
+[2H,2D,5S,9C,KD]
+then return player 1 win
+
+when input
+[2H,3D,5S,9C,KD]
+[2H,3D,2S,9C,KD]
+then return player 2 win
+
+when input
+[2H,2D,5S,9C,9D]
+[2H,2D,5S,9C,KD]
+then return player 1 win
+
+when input
+[2H,2D,5S,5C,KD]
+[2H,2D,2S,9C,KD]
+then return player 2 win
+
+when input
+[2H,2D,2S,9C,9D]
+[2H,2D,2S,9C,KD]
+then return player 1 win
+
+when input
+[2H,2D,2S,8C,9D]
+[2H,2D,2S,2C,3D]
+then return player 2 win
+
+when input
+[2H,2D,2S,9C,9D]
+[2H,2D,2S,2C,3D]
+then return player 2 win
+
+when input
+[2H,2D,2S,2C,9D]
+[2H,3D,4S,5C,6D]
+then return player 2 win
+
+when input
+[2H,3D,4S,5C,6D]
+[2H,3H,4H,5H,6H]
+then return player 2 win
