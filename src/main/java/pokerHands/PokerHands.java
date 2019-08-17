@@ -15,7 +15,8 @@ public class PokerHands {
         .compareTo(cardList2.get(0).getCardName().substring(0, 1));
     if (resultNum > 0) {
       return "player 1 win!";
+    }else{
+      return "player 2 win!";
     }
-    return "";
   }
 }
